@@ -3,7 +3,7 @@
 
 library(microbenchmark)
 source("llr_functions.R")
-microbenchmark::microbenchmark(llrz(x = x, y = y, z = z, omega = 2))
+microbenchmark::microbenchmark(llr(x = x, y = y, z = z, omega = 2))
 
 
 
