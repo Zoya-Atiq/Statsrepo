@@ -1,8 +1,4 @@
-# STAT-S 610
-# LAB 4
-# 2019-10-03
-# https://jfukuyama.github.io/teaching/stat610/assignments/lab4.pdf
-
+#initial file 1
 # --- functions --- #
 
 #' @param x (numeric) vector of same length as y
@@ -10,7 +6,7 @@
 #' @param z (numeric) vector, can be of a different length
 #' @param omega (numeric) must be a scalar
 #' @return (numeric) vector of the same length as z
-llrz = function(x, y, z, omega) {
+llr = function(x, y, z, omega) {
   fits = sapply(z, compute_f_hat, x, y, omega)
   return(fits)
 }
@@ -21,9 +17,10 @@ llrz = function(x, y, z, omega) {
 #' @param omega (numeric) must be a scalar
 #' @return (numeric) scalar
 compute_f_hat = function(z, x, y, omega) {
-  Wz = make_weight_matrix(z, x, omega)
+  Wz = diag(make_weight_matrix(z, x, omega))
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y
+  n = nrow(X)
+  f_hat = c(1, z) %*% (t(X))%*%t(sapply(1:n, function(i){Wz[i]*X[i, ]}))%*% t(X)%*% Wz * y
   return(f_hat)
 }
 
@@ -68,8 +65,5 @@ y = french_fries$buttery
 
 # space along which to smooth
 z = seq(0, 15, length.out = 100)
-
-
-
 
 
